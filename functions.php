@@ -1,36 +1,4 @@
 <?php 
-
-
-function add_guest(){
-if (isset($_POST['submit'])) {
-            
-            $dbhost = 'localhost';
-            $dbuser = 'root';
-            $dbpass = '';
-            $dbname = 'rsvp';
-            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
-        
-            if(! $conn ) {
-               die('Could not connect: '.mysqli_error());
-            }
-               $name = @$_POST['name'];
-               $email = @$_POST['email'];
-                           
-            $sql = "INSERT INTO Guest (Name,Email) VALUES('$name','$email')";
-               
-            mysqli_select_db($conn,$dbname);
-            $retval = mysqli_query($conn,$sql);
-            
-            if(! $retval ) {
-               die('Could not enter data: '.mysqli_error($conn));
-            }
-            
-            
-            mysqli_close($conn);
-          }
-      }
-
-
       function show_event()
       {
       		$dbhost = 'localhost';
@@ -39,20 +7,21 @@ if (isset($_POST['submit'])) {
             $dbname = 'rsvp';
             $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
         
-            if(! $conn ) {
+            if(! $conn ) 
+            {
                die('Could not connect: '.mysqli_error());
             }
-   
-   
-		   $sql = 'SELECT * FROM Event WHERE Date=(SELECT min(Date) FROM Event)';
-		   mysqli_select_db($conn, $dbname);
-		   $retval = mysqli_query($conn,$sql);
+   			$sql = 'SELECT * FROM Event WHERE Date=(SELECT min(Date) FROM Event)';
+		   	mysqli_select_db($conn, $dbname);
+		   	$retval = mysqli_query($conn,$sql);
 		   
-		   if(! $retval ) {
-		      die('Could not get data: ' . mysqli_error($conn));
-		   }
+		  	if(! $retval )
+		  	{
+		     die('Could not get data: ' . mysqli_error($conn));
+		   	}
 		   
-		   while($row = mysqli_fetch_array($retval)) {
+		   	while($row = mysqli_fetch_array($retval))
+		   	{
 		      $theme = $row['Theme'];
 		      $date = $row['Date'];
 		      $venue = $row['Venue'];
@@ -72,7 +41,8 @@ if (isset($_POST['submit'])) {
     }   
 
 
-    function rsvp(){
+    function rsvp()
+    {
     	    $dbhost = 'localhost';
             $dbuser = 'root';
             $dbpass = '';
@@ -100,7 +70,6 @@ if (isset($_POST['submit'])) {
     		<thead>
       		<tr>
         	<th>Name</th>
-        	<!--<th>Email</th> -->
         	<th>Guest_ID</th>
         	<th>Staus</th>
       		</tr>
@@ -110,14 +79,12 @@ if (isset($_POST['submit'])) {
     		<?php
             while($row = mysqli_fetch_array($retval)) {
             $name = $row['Name'];
-            //$email = $row['Email'];
             $guestid = $row['Guest_ID'];
             $status = $row['Status'];
             ?>
            
       <tr>
         <td><?php echo $name; ?></td>
-    <!--    <td><?php //echo $email; ?></td>-->
         <td><?php echo $guestid; ?></td>
 
         <td><?php echo $status; ?></td>
