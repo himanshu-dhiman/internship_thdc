@@ -6,7 +6,20 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="major.js"></script>
+  <script type="text/javascript" >
+
+  function ValidateForm3() {
+
+var x=document.forms["myForm3"]["email"].value;
+if (x==null || x=="")
+ {
+  alert("Email must be filled out");
+  return false;
+ }
+}
+</script>
+
   </head>
 
 <body class="container">
@@ -56,7 +69,7 @@
   <div class="row">
     <div class="col-sm-6">
       <h1 style="text-align: center; font-family: "> RSVP  </h1>
-      <form class="form-horizontal" method="POST" name="myForm" id="form-rsvp" > 
+      <form class="form-horizontal" method="POST" name="myForm3" id="form-rsvp" > 
         <br>
         <br>
           <div class="form-group">
@@ -67,7 +80,7 @@
           </div>
           <br>
           <div style="text-align: center;">
-            <button type="submit" class="btn btn-success" id="sub1" name="sub1"> Submit </button>
+            <button type="button" class="btn btn-success" id="sub1" name="sub1" onclick="return ValidateForm3()"> Submit </button>
           </div>
       </form>   
     </div>
