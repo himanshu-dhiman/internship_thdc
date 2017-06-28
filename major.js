@@ -1,5 +1,6 @@
 $(document).ready(function() 
     {
+ 
     $("#guest").on("click", function(){
     var datastring = "action=addguest&"+$("#form-search1").serialize();
     console.log(datastring);
@@ -7,8 +8,7 @@ $(document).ready(function()
             type        : 'POST', 
             url         : 'ajax.php',
             data        : datastring,
-            dataType    : 'json',
-            Success     : function(result){
+            success     : function(result){
                               console.log("hello");
                               if (result.match(/success/gi)) {
                                 alert("Data Submitted");
@@ -25,30 +25,90 @@ $(document).ready(function()
         $.ajax({
             type        : 'POST', 
             url         : 'ajax.php', 
-            data        : datastring,
-            dataType    : 'json', 
-            Success     : function(data){
-                              console.log("hello");
-                              alert("Data Submitted");
+            data        : datastring, 
+            success     : function(result){
+                                if (result.match(/success/gi)) {
+                                alert("Data Submitted");
+                                console.log("hello");
+                              }else if (result.match(/failure/gi)) {
+                                alert("Invalid Data");
+                              }
                           }
-    
             
         });
         });
 
     $("#sub1").on("click", function(){
-    var datastring = "action=eventManager&"+$('#form-rsvp').serialize();
+    var datastring = "action=generatelink&"+$('#form-rsvp').serialize();
     console.log(datastring);
         $.ajax({
-            type        : "POST", // define the type of HTTP verb we want to use (POST for our form)
-            url         : "ajax.php", // the url where we want to POST
+            type        : "POST", 
+            url         : "ajax.php", 
             data        : datastring,
-            dataType    : "json", // what type of data do we expect back from the server
-            Success     : function(data){
+            success     : function(result){
                               console.log("hello");
-                              alert("Data Submitted");
-                          }
-      });       
+                              console.log(result);
+                              $res=result.slice(1);
+                              console.log($res);
+                              if (window.confirm('Click "OK" to Confirm your RSVP.')) 
+                                {
+                                window.location='target.php?'+$res;
+                                };  
+                             
+           }
 
- });     
+        });     
+        });
+
+    $("#sub2").on("click", function(){
+    var datastring = "action=addrequest&"+$('#form-request').serialize();
+    console.log(datastring);
+        $.ajax({
+            type        : "POST", 
+            url         : "ajax.php", 
+            data        : datastring,
+            success     : function(result){
+                            if (result.match(/success/gi)) {
+                            console.log("hello");
+                            
+                           }
+           }
+
+        });     
+        });
+
+    $("#accept").on("click", function(){
+    var datastring = "action=acceptrequest&"+$('#form-req').serialize();
+    console.log(datastring);
+        $.ajax({
+            type        : "POST", 
+            url         : "ajax.php", 
+            data        : datastring,
+            success     : function(result){
+                            if (result.match(/success/gi)) {
+                            console.log("hello");
+                            
+                           }
+           }
+
+        });     
+        });
+
+
+    $("#decline").on("click", function(){
+    var datastring = "action=declinerequest&"+$('#form-req').serialize();
+    console.log(datastring);
+        $.ajax({
+            type        : "POST", 
+            url         : "ajax.php", 
+            data        : datastring,
+            success     : function(result){
+                            if (result.match(/success/gi)) {
+                            console.log("hello");
+                            
+                           }
+           }
+
+        });     
+        });
 });

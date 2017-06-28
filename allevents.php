@@ -5,43 +5,40 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://use.fontawesome.com/ffc2c94a85.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merienda" rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
 </head>
-<body class="container">
+<body class="container" style="font-family: 'Merienda'">
 <div style="text-align: center;">
 
  <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
           <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
+            <div class="container-fluid" style="font-family: 'Josefin Sans';">
               <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>                        
                 </button>
-                <a class="navbar-brand" href="index.php">RSVP</a>
+                <a class="navbar-brand" href="index.php">ColoredCow</a>
               </div>
               <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
-                  <li class="active"><a href="index.php">Home</a></li>
-                 <!-- <li class="active"><a href="#">Contacts</a></li>
-                  <li class="active"><a href="#">Blog</a></li> -->
+                  <li class="active"><a href="index.php">HOME</a></li>
             </ul>
-      <!--      <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><span class="glyphicon glyphicon-user "></span> Sign Up</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-log-in "></span> Login</a></li>
-              </ul>-->
               </div>
             </div>
         </nav>
       </div>
     </div>
-    <div style="text-align: center;">
-      <h2>------------------------ALL EVENTS------------------------</h2>
+    <div style="text-align: center; font-family: 'Merienda'">
+      <h1><span class="label label-default">* ALL EVENTS *</span></h1>
       <br><br>
     </div>
-
+<div class="row">
 <?php 
     $dbhost = 'localhost';
     $dbuser = 'root';
@@ -54,7 +51,7 @@
       die('Could not connect: ' . mysqli_error());
    }
    
-   $sql = 'SELECT * FROM Event ORDER BY Date';
+   $sql = 'SELECT * FROM Event WHERE Date>=(SELECT CURDATE()) ORDER BY Date';
    mysqli_select_db($conn, $dbname);
    $retval = mysqli_query($conn,$sql);
    
@@ -67,16 +64,19 @@
       $date = $row['Date'];
       $venue = $row['Venue'];
       ?>
-      <div>
-      <p>_______________________________________________</p>
-      <h4>----- Theme ----- </h5><?php echo $theme ?>
-      <h4>----- Date ----- </h5><?php echo $date ?>
-      <h4>----- Venue ----- </h5><?php echo $venue ?>
-      <p>_______________________________________________</p>
-      </div>
+        <div class="col-sm-6">
+           <div>
+            <p style="font-size: 45px; text-shadow: 2px 2px 2px "><?php echo $theme ?></p>
+          <p style="font-size: 25px; text-shadow: 1px 1px 1px"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<?php echo $date ?></p>
+          <p style="font-size: 25px; text-shadow: 1px 1px 1px"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbsp<?php echo $venue ?></p>
+          <hr style="border-width: 5px">
+          <br>
+          </div>
+          </div>
       <?php } 
    mysqli_close($conn);
 ?>
+</div>
 </div>
 </body>
 </html>
