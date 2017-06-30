@@ -1,23 +1,50 @@
 $(document).ready(function() 
     {
- 
-    $("#guest").on("click", function(){
-    var datastring = "action=addguest&"+$("#form-search1").serialize();
-    console.log(datastring);
-        $.ajax({
-            type        : 'POST', 
-            url         : 'ajax.php',
-            data        : datastring,
-            success     : function(result){
-                              console.log("hello");
-                              if (result.match(/success/gi)) {
-                                alert("Data Submitted");
-                              }
-                          }
-                    
-        });
 
-    });  
+        
+            $("#guest").on("click", function(){
+            var datastring = "action=addguest&"+$('#form-search1').serialize();
+            console.log(datastring);
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'ajax.php',
+                    data        : datastring,
+                    success     : function(result){
+                                      console.log("hello");
+                                      if (result.match(/success/gi)) {
+                                        window.location='adminhome.php';
+                                      }else if (result.match(/failure/gi)) {
+                                    alert("Invalid Data");
+                                  }
+                                  }
+                            
+                });
+            });  
+
+
+
+
+    $("#manage").on("click", function(){
+        var datastring = "action=eventManager&"+$("#form-manage").serialize();
+        console.log(datastring);
+            $.ajax({
+                type        : 'POST', 
+                url         : 'ajax.php',
+                data        : datastring,
+                success     : function(result){
+                                  console.log("hello");
+                                  if (result.match(/success/gi)) {
+                                    window.location='index.php';
+                                  } else if (result.match(/failure/gi)) {
+                                    alert("Invalid Data");
+                                  }
+                              }
+                        
+            });
+
+        });  
+
+
 
     $("#sub").on("click", function(){
     var datastring = "action=addevent&"+$("#form-search").serialize();
@@ -28,7 +55,7 @@ $(document).ready(function()
             data        : datastring, 
             success     : function(result){
                                 if (result.match(/success/gi)) {
-                                alert("Data Submitted");
+                                window.location='adminhome.php';
                                 console.log("hello");
                               }else if (result.match(/failure/gi)) {
                                 alert("Invalid Data");
@@ -71,14 +98,18 @@ $(document).ready(function()
                             if (result.match(/success/gi)) {
                             console.log("hello");
                             
-                           }
+                           }else if (result.match(/failure/gi)) {
+                                    alert("Invalid Data");
+                                  }
            }
 
         });     
         });
 
-    $("#accept").on("click", function(){
-    var datastring = "action=acceptrequest&"+$('#form-req').serialize();
+    $(".accept").on("click", function(){
+      var key=this.dataset.id;
+      console.log(key);
+    var datastring = `action=acceptrequest&id=${key}&`+$('#form-req').serialize();
     console.log(datastring);
         $.ajax({
             type        : "POST", 
@@ -87,6 +118,7 @@ $(document).ready(function()
             success     : function(result){
                             if (result.match(/success/gi)) {
                             console.log("hello");
+                           // window.location='adminhome.php';
                             
                            }
            }
@@ -95,8 +127,10 @@ $(document).ready(function()
         });
 
 
-    $("#decline").on("click", function(){
-    var datastring = "action=declinerequest&"+$('#form-req').serialize();
+    $(".decline").on("click", function(){
+    var key=this.dataset.id;
+    console.log(key);
+    var datastring = `action=declinerequest&id=${key}&`+$('#form-req').serialize();
     console.log(datastring);
         $.ajax({
             type        : "POST", 
@@ -105,10 +139,54 @@ $(document).ready(function()
             success     : function(result){
                             if (result.match(/success/gi)) {
                             console.log("hello");
+                           window.location='adminhome.php';
                             
                            }
            }
 
         });     
         });
+
+     $("#sub3").on("click", function(){
+            var datastring = "action=login&"+$('#form-login').serialize();
+            console.log(datastring);
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'ajax.php',
+                    data        : datastring,
+                    success     : function(result){
+                                      console.log("hello");
+                                      if (result.match(/success/gi)) {
+                                        window.location='adminhome.php';
+                                      }else if (result.match(/failure/gi)) {
+                                    alert("Wrong Credentials");
+                                    }
+                                  }
+                            
+                });
+            });  
+
+
+      $(".delete").on("click", function(){
+      var key=this.dataset.id;
+      console.log(key);
+      var datastring = `action=deleteevent&id=${key}`;
+      console.log(datastring);
+          $.ajax({
+            type        : "POST", 
+            url         : "ajax.php", 
+            data        : datastring,
+            success     : function(result){
+                            if (result.match(/success/gi)) {
+                            console.log("hello");
+                           window.location='adminhome.php';
+                            
+                           }
+           }
+
+        });     
+        });
+
+
+
 });

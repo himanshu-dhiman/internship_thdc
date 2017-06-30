@@ -2,13 +2,14 @@
 <html>
 
 <head>
-  <title>RSVP-HOME</title>
+  <title>RSVP-ADMIN PORTAL</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://use.fontawesome.com/ffc2c94a85.js"></script> 
   <link href="https://fonts.googleapis.com/css?family=Merienda" rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+ 
   <script type="text/javascript" src="major.js"></script>
 </head>
 
@@ -60,45 +61,49 @@
               <br><br><br>
               <div class="col-sm-6">
                 <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" data-toggle="modal" data-target="#addevent"><b>* ADD AN EVENT *</b></button>
-                <br><button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" data-toggle="collapse" data-target="#demo3"><b>* PREVIOUS EVENTS *</b></button>
-                <div id="demo3" class="collapse">
-                <?php 
-                prev_event();
+                <br>
+                <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" id="prev" onclick="location.href='previous.php';"><b>* PREVIOUS EVENTS *</b></button>
+                <br>
+                <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" data-toggle="collapse" data-target="#demo3"><b>* DELETE AN EVENT *</b></button>
+                <div id="demo3" class="collapse" style="font-family: 'Josefin Sans'">
+                  <?php 
+                    editevent();
                 ?>
-              </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div id="menu1" class="tab-pane fade">
-        <div class="container">
+        
         <div class="row">
         <hr style="border-width: 6px">
         <div class="col-sm-6">
-        <p style="font-family: 'Merienda'; font-size: 35px; text-shadow: 2px 2px 2px">Guest List for Upcoming Event</p>
-        <?php GuestList();
+        <br>
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#addguest"><b>* INVITE GUEST *</b></button><br>
+        <hr style="border-width: 3px;">
+        <p style="font-family: 'Josefin Sans'; font-size: 28px; text-align: center; text-shadow: 1px 1px 1px"><b>INVITED GUESTS</b></p>
+        <?php allguests();
          ?>
          </div>
          <div class="col-sm-6">
-          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#addguest">* ADD A GUEST *</button>
-          <br><button type="button" class="btn btn-info btn-lg btn-block" data-toggle="collapse" data-target="#demo1">* GUEST REQUESTS *</button>
+          <br>
+          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="collapse" data-target="#demo1"><b>* INVITATION REQUESTS *</b></button>
           <div id="demo1" class="collapse">
             <?php 
               approve();
           ?>
           </div>
-          <br><button type="button" class="btn btn-info btn-lg btn-block" data-toggle="collapse" data-target="#demo2">* REQUEST'S STATUS *</button>
-          <div id="demo2" class="collapse">
-            <?php 
-              approved();
-          ?>
-          </div>
-          
+          <br>
+          <hr style="border-width: 3px;">
+          <p style="font-family: 'Josefin Sans'; font-size: 28px; text-align: center; text-shadow: 1px 1px 1px"><b>REQUESTS RESPONDED</b></p>
+        <?php approved();
+         ?>
+        
+           
          </div> 
 
         </div>
-
-      </div>
     </div>
     </div>
     </div>
@@ -111,7 +116,7 @@
         <div class="modal-content" style="font-family:'Josefin Sans';">
           <div class="modal-header" style="background-color: #CACACA">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><b>ADD EVENT</b></h4>
+            <h4 class="modal-title"><b>ADD AN EVENT</b></h4>
           </div>
           <div class="modal-body" >
             <form class="form-horizontal" method="POST" name="myForm" action="#" id="form-search"
@@ -158,7 +163,7 @@
         <div class="modal-content" style="font-family:'Josefin Sans';">
           <div class="modal-header" style="background-color: #CACACA">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><b>ADD GUEST</b></h4>
+            <h4 class="modal-title"><b>INVITE GUEST</b></h4>
           </div>
           <div class="modal-body" >
             <form class="form-horizontal" method="POST" name="myForm" action="#" id="form-search1"
@@ -168,14 +173,14 @@
               data-fv-icon-validating="glyphicon glyphicon-refresh" >
                 <br>
                 <div class="form-group">
-                  <label class="control-label col-sm-2" for="date">Date :</label>
+                  <label class="control-label col-sm-2" for="date">Name :</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" id="name" placeholder="Enter Guest's Name" name="name">
                   </div>
                 </div>
                 <br>
                 <div class="form-group">
-                  <label class="control-label col-sm-2" for="inputError">Venue :</label>
+                  <label class="control-label col-sm-2" for="inputError">Email :</label>
                   <div class="col-sm-8">
                     <input type="email" class="form-control" id="email" placeholder="Enter Guest's Email" name="email">  
                   </div>
@@ -183,15 +188,14 @@
                 </form>
           </div>
           <div class="modal-footer" style="background-color: #CACACA">
-            <button type="button" class="btn btn-success" id="guest" name="guest" data-dismiss="modal";"><b>ADD GUEST</b></button>
+            <button type="button" class="btn btn-success" id="guest" name="guest" data-dismiss="modal"><b>ADD GUEST</b></button>
           </div>
           
         </div>      
       </div>
     </div>
 
-
-
+     
 
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>All Future Events</title>
+  <title>All Previous Events</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div style="text-align: center; font-family: 'Merienda'">
-      <h1><span class="label label-default">* ALL EVENTS *</span></h1>
+      <h1><span class="label label-default">* ALL PREVIOUS EVENTS *</span></h1>
       <br><br>
     </div>
 <div class="row">
@@ -51,7 +51,7 @@
       die('Could not connect: ' . mysqli_error());
    }
    
-   $sql = 'SELECT * FROM Event WHERE Date>=(SELECT CURDATE()) ORDER BY Date';
+   $sql = 'SELECT * FROM Event WHERE Date<=(SELECT CURDATE()) ORDER BY Date DESC';
    mysqli_select_db($conn, $dbname);
    $retval = mysqli_query($conn,$sql);
    

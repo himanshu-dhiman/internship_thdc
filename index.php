@@ -10,17 +10,9 @@
   <link href="https://fonts.googleapis.com/css?family=Merienda" rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
   <script type="text/javascript" src="major.js"></script>
-  <script type="text/javascript" >
-    function ValidateForm3()
-    {
-      var x=document.forms["myForm3"]["email"].value;
-      if (x==null || x=="")
-      {
-        alert("Email must be filled out");
-        return false;
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"> </script>
+  
 </head>
 
 <body class="container" style="font-family:'Merienda',serif;">
@@ -60,7 +52,8 @@
     ?>
      </div>
      <div style="text-align: right;">
-      <a href="allevents.php"><p style="font-family :'Josefin Sans';font-size: 20px text-shadow: 3px 3px 3px"><b>* See All *</b></p></a>
+      <br>
+      <button type="button" class="btn btn-link" style="font-family: 'Josefin Sans'" id="prev" onclick="location.href='allevents.php';"><b>* ALL FUTURE EVENTS *</b></button>
     </div>
      </div>
     <div class="col-sm-6">
@@ -68,13 +61,13 @@
       <br><br><h1>
         Got an Invitation ?
       </h1>
-        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#rsvpmodal">* RSVP Here *</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#rsvpmodal"><b>* RSVP Here *</b></button>
     </div>
   </div>
     <div class="col-sm-6"> 
       <div style="text-align: center; font-family:'Josefin Sans';">
        <br><br><br> <h1 > Wanna Join Us ? </h1>
-          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#requestmodal" >* REQUEST n Get Invitation *</button>
+          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#requestmodal" ><b>* REQUEST n Get Invitation *</b></button>
       </div>  
     </div>
   </div>
@@ -152,7 +145,7 @@
               data-fv-framework="bootstrap"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh" >
+              data-fv-icon-validating="glyphicon glyphicon-refresh" data-toggle="validator">
               <label>EMAIL :</label>
               <div >
                 <input type="email" class="form-control" id="email" placeholder="Enter your Email" name="email">
@@ -165,7 +158,7 @@
           </form>
           </div>
           <div class="modal-footer" style="background-color: #CACACA">
-            <button type="button" class="btn btn-success" id="sub3" name="sub3" data-dismiss="modal" onclick="javascript:window.location.href='adminhome.php';">LOGIN</button>
+            <button type="button" class="btn btn-success" id="sub3" name="sub3" data-dismiss="modal">LOGIN</button>
           </div>
           
         </div>      

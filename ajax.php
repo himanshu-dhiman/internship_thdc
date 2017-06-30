@@ -34,6 +34,13 @@ if(isset($_POST['action']))
 		case 'generatelink': $status=generatelink();
 							 print json_encode($status);
 							 break; 
+		case 'login': $status=login();
+							 print json_encode($status);
+							 break; 
+		case 'deleteevent': $status=deleteevent();
+							 print json_encode($status);
+							 break; 
+
 			default : echo "Invalid...";
 					break;
 	}
