@@ -40,7 +40,21 @@ if(isset($_POST['action']))
 		case 'deleteevent': $status=deleteevent();
 							 print json_encode($status);
 							 break; 
-
+		case 'confirmTable' : $status=confirmTable();
+							 echo json_encode($status);
+							break;
+		case 'pendingTable' : $status=pendingTable();
+							 echo json_encode($status);
+							break;
+		case 'remove' : $status=removerec();
+							 echo json_encode($status);
+							break;
+		case 'approvedguest' : $status=approvedguest();
+							 echo json_encode($status);
+							break;
+		case 'declinetable' : $status=declinedguest();
+							 echo json_encode($status);
+							break;
 			default : echo "Invalid...";
 					break;
 	}

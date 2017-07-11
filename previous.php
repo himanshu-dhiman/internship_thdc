@@ -8,10 +8,11 @@
   <script src="https://use.fontawesome.com/ffc2c94a85.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Merienda" rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+  <script type="text/javascript" src="major.js"></script>
 </head>
 <body class="container" style="font-family: 'Merienda'">
 <div style="text-align: center;">
-
+<div class="container">
  <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -27,7 +28,7 @@
               </div>
               <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
-                  <li class="active"><a href="index.php">HOME</a></li>
+                  <li class="active"><a href="adminhome.php">HOME</a></li>
             </ul>
               </div>
             </div>
@@ -35,7 +36,7 @@
       </div>
     </div>
     <div style="text-align: center; font-family: 'Merienda'">
-      <h1><span class="label label-default">* ALL PREVIOUS EVENTS *</span></h1>
+      <h1><span class="label label-default">* ALL EVENTS *</span></h1>
       <br><br>
     </div>
 <div class="row">
@@ -51,7 +52,7 @@
       die('Could not connect: ' . mysqli_error());
    }
    
-   $sql = 'SELECT * FROM Event WHERE Date<=(SELECT CURDATE()) ORDER BY Date DESC';
+   $sql = 'SELECT * FROM Event ORDER BY Date';
    mysqli_select_db($conn, $dbname);
    $retval = mysqli_query($conn,$sql);
    
@@ -63,12 +64,14 @@
       $theme = $row['Theme'];
       $date = $row['Date'];
       $venue = $row['Venue'];
+      $Id= $row['Event_ID'];
       ?>
         <div class="col-sm-4" style="text-align: left;">
            <div>
-            <p style="font-size: 45px; text-shadow: 2px 2px 2px "><?php echo $theme ?></p>
+            <p style="font-size: 45px; text-shadow: 1px 1px 1px "><?php echo $theme ?></p>
           <p style="font-size: 25px; text-shadow: 1px 1px 1px"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<?php echo $date ?></p>
           <p style="font-size: 25px; text-shadow: 1px 1px 1px"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbsp<?php echo $venue ?></p>
+          <br><td><button type="button" class="btn btn-danger delete" style="font-family: 'Josefin Sans';" data-id=<?php echo $Id; ?> name="accept">DELETE</button></td>
           <hr style="border-width: 5px">
           <br>
           </div>
@@ -76,6 +79,7 @@
       <?php } 
    mysqli_close($conn);
 ?>
+</div>
 </div>
 </div>
 </body>

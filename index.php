@@ -30,10 +30,7 @@
               <a class="navbar-brand" href="index.php">ColoredCow</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">HOME</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="#" data-toggle="modal" data-target="#admin"><span class="glyphicon glyphicon-user"></span> <b>ADMINISTRATOR LOGIN</b></a></li>
               </ul>
             </div>
@@ -67,7 +64,7 @@
     <div class="col-sm-6"> 
       <div style="text-align: center; font-family:'Josefin Sans';">
        <br><br><br> <h1 > Wanna Join Us ? </h1>
-          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#requestmodal" ><b>* REQUEST n Get Invitation *</b></button>
+          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#requestmodal" ><b>* REQUEST 'n Get Invitation *</b></button>
       </div>  
     </div>
   </div>
@@ -105,7 +102,7 @@
         <div class="modal-content" style="font-family: 'Josefin Sans';">
           <div class="modal-header" style="background-color: #CACACA">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><b>APPLY FOR SOIREE<b></h4>
+            <h4 class="modal-title"><b>REQUEST 'n GET INVITATION<b></h4>
           </div>
           <div class="modal-body" >
           <form class="form-horizontal" method="POST" name="myForm" action="#" id="form-request"

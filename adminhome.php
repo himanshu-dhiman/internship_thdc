@@ -62,14 +62,8 @@
               <div class="col-sm-6">
                 <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" data-toggle="modal" data-target="#addevent"><b>* ADD AN EVENT *</b></button>
                 <br>
-                <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" id="prev" onclick="location.href='previous.php';"><b>* PREVIOUS EVENTS *</b></button>
+                <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" id="prev" onclick="location.href='previous.php';"><b>* ALL EVENTS *</b></button>
                 <br>
-                <button type="button" class="btn btn-primary btn-lg btn-block" style="font-family: 'Josefin Sans'" data-toggle="collapse" data-target="#demo3"><b>* DELETE AN EVENT *</b></button>
-                <div id="demo3" class="collapse" style="font-family: 'Josefin Sans'">
-                  <?php 
-                    editevent();
-                ?>
-                </div>
               </div>
             </div>
           </div>

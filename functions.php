@@ -28,9 +28,9 @@
 		      ?>
 
 		      	<div>
-		      	<p style="font-size: 100px; text-shadow: 2px 2px 2px "><?php echo $theme ?></p>
-		    	<p style="font-size: 48px; text-shadow: 2px 2px 2px"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<?php echo $date ?></p>
-		     	<p style="font-size: 48px; text-shadow: 2px 2px 2px"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbsp<?php echo $venue ?></p>
+		      	<p style="font-size: 90px; text-shadow: 2px 2px 2px "><?php echo $theme ?></p>
+		    	<p style="font-size: 35px; text-shadow: 2px 2px 2px"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<?php echo $date ?></p>
+		     	<p style="font-size: 35px; text-shadow: 2px 2px 2px"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbsp<?php echo $venue ?></p>
 		      </div>
 
       <?php
@@ -51,7 +51,7 @@
                die('Could not connect: '.mysqli_error());
             }
                
-            $sql = "SELECT * FROM Guest ORDER BY Status AND Name";
+            $sql = "SELECT * FROM Guest ORDER BY Status, Guest_ID DESC";
                
             mysqli_select_db($conn,$dbname);
             $retval = mysqli_query($conn,$sql);
@@ -62,7 +62,7 @@
             }
             ?>
             <div>
-            <table class="table">
+            <table class="table" id="invitation_table">
     		<thead>
       		<tr>
         	<th>Name</th>
@@ -373,7 +373,7 @@ function approve()
                die('Could not connect: '.mysqli_error());
             }
                
-            $sql = "SELECT * FROM Request WHERE Status='REQUESTED' ORDER BY request_ID DESC ";
+            $sql = "SELECT * FROM Request WHERE Status='REQUESTED' ORDER BY Request_ID DESC";
                
             mysqli_select_db($conn,$dbname);
             $retval = mysqli_query($conn,$sql);
@@ -385,7 +385,7 @@ function approve()
             ?>
             <div>
             <br><br>
-            <table class="table">
+            <table class="table" id="requests">
     		<thead>
       		<tr>
         	<th>Name</th>
@@ -436,7 +436,7 @@ function approved()
                die('Could not connect: '.mysqli_error());
             }
                
-            $sql = "SELECT * FROM Request WHERE Status='APPROVED' ORDER BY Name";
+            $sql = "SELECT * FROM Request WHERE Status='APPROVED' ORDER BY Request_ID DESC";
                
             mysqli_select_db($conn,$dbname);
             $retval = mysqli_query($conn,$sql);
@@ -446,9 +446,9 @@ function approved()
               echo "<script>alert('Failure.');</script>";
             }
             ?>
-            <div class="row">
-            <div class="col-sm-6">
-            <table class="table">
+            <hr>
+            <h4>APPROVED REQUESTS</h4>
+            <table class="table" id="approved">
     		<thead>
       		<tr>
         	<th>Name</th>
@@ -474,10 +474,9 @@ function approved()
             ?>
                 </tbody>
 			  </table>
-			  </div>
-
+			  
 			 <?php
-			$sql2 = "SELECT * FROM Request WHERE Status='REJECTED' ORDER BY Name";
+			$sql2 = "SELECT * FROM Request WHERE Status='REJECTED' ORDER BY Request_ID DESC";
                
             mysqli_select_db($conn,$dbname);
             $retval = mysqli_query($conn,$sql2);
@@ -487,8 +486,9 @@ function approved()
               echo "<script>alert('Failure.');</script>";
             }
             ?>
-			<div class="col-sm-6">
-            <table class="table">
+            <hr>
+            <h4>DECLINED REQUESTS</h4>
+			<table class="table" id="declined">
     		<thead>
       		<tr>
         	<th>Name</th>
@@ -514,9 +514,7 @@ function approved()
             ?>
                 </tbody>
 			  </table>
-			  </div>
-			  </div>
-			  
+						  
 <?php
 mysqli_close($conn);
     }
@@ -527,16 +525,17 @@ function generatelink()
 {
 	if (($_POST['email']!=null||$_POST['email']!="")) {
             $email2 = $_POST['email'];
+            var_dump($email2);
             $token = openssl_random_pseudo_bytes(16);
 			$token = bin2hex($token);
 			//var_dump($token);
- 
 			$dbhost = 'localhost';
             $dbuser = 'root';
             $dbpass = '';
             $dbname = 'rsvp';
             $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
-        
+    
+
             if(! $conn ) {
                die('Could not connect: '.mysqli_error());
             }
@@ -688,70 +687,6 @@ function login()
 
 
 
-function editevent()
-    {
-            $dbhost = 'localhost';
-            $dbuser = 'root';
-            $dbpass = '';
-            $dbname = 'rsvp';
-            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
-        
-            if(! $conn ) {
-               die('Could not connect: '.mysqli_error());
-            }
-               
-            $sql = "SELECT * FROM Event ORDER BY Date DESC ";
-               
-            mysqli_select_db($conn,$dbname);
-            $retval = mysqli_query($conn,$sql);
-
-            if(! $retval ) {
-               die('Could not get data: '.mysqli_error($conn));
-              echo "<script>alert('Failure.');</script>";
-            }
-            ?>
-            <div>
-            <br><br>
-            <table class="table">
-            <thead>
-            <tr>
-            <th>Theme</th>
-            <th>Date</th>
-            <th>Venue</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <?php
-            while($row = mysqli_fetch_array($retval)) {
-            $theme = $row['Theme'];
-            $date = $row['Date'];
-            $venue=$row['Venue'];
-            $Id= $row['Event_ID'];
-            ?>
-
-            <form id="form-edit">
-            <input type="hidden" name="email" value="<?php echo $theme; ?>">
-            </form>
-           
-      <tr>
-      
-        <td><?php echo $theme; ?></td>
-        <td><?php echo $date; ?></td>
-        <td><?php echo $venue; ?></td>
-
-        <td><button type="button" class="btn btn-danger delete"  data-id=<?php echo $Id; ?> name="accept">DELETE</button></td>
-      </tr>
-            <?php } 
-            ?>
-                </tbody>
-              </table>
-              </div>
-<?php
-mysqli_close($conn);
-    }
-
-
 
 function deleteevent()
 {
@@ -818,6 +753,152 @@ function eventedit2()
             else {return 'failure';}
             
 }
+
+
+function confirmTable()
+{
+            $dbhost = 'localhost';
+            $dbuser = 'root';
+            $dbpass = '';
+            $dbname = 'rsvp';
+            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
+        
+            if(! $conn ) {
+               die('Could not connect: '.mysqli_error());
+            }
+               
+            $sql= "SELECT * FROM Guest WHERE Status='CONFIRM' ORDER BY Guest_ID DESC "; 
+            mysqli_select_db($conn,$dbname);
+            $retval = mysqli_query($conn,$sql);
+            if(! $retval ) {
+               die('Could not get data: '.mysqli_error($conn));
+              echo "<script>alert('Failure.');</script>";
+            }
+         
+            $guest=mysqli_fetch_all($retval,MYSQLI_ASSOC);
+            return $guest;
+
+
+
+}
+
+
+function pendingTable()
+{
+            $dbhost = 'localhost';
+            $dbuser = 'root';
+            $dbpass = '';
+            $dbname = 'rsvp';
+            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
+        
+            if(! $conn ) {
+               die('Could not connect: '.mysqli_error());
+            }
+               
+            $sql= "SELECT * FROM Guest WHERE Status='PENDING' ORDER BY Guest_ID DESC"; 
+            mysqli_select_db($conn,$dbname);
+            $retval = mysqli_query($conn,$sql);
+            if(! $retval ) {
+               die('Could not get data: '.mysqli_error($conn));
+              echo "<script>alert('Failure.');</script>";
+            }
+         
+            $guest=mysqli_fetch_all($retval,MYSQLI_ASSOC);
+            return $guest;
+
+
+
+}
+
+
+
+function removerec()
+    {
+            $dbhost = 'localhost';
+            $dbuser = 'root';
+            $dbpass = '';
+            $dbname = 'rsvp';
+            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
+        
+            if(! $conn ) {
+               die('Could not connect: '.mysqli_error());
+            }
+               
+            $sql = "SELECT * FROM Request WHERE Status='REQUESTED' ORDER BY request_ID DESC ";
+               
+            mysqli_select_db($conn,$dbname);
+            $retval = mysqli_query($conn,$sql);
+
+            if(! $retval ) {
+               die('Could not get data: '.mysqli_error($conn));
+              echo "<script>alert('Failure.');</script>";
+            }
+
+            $guest=mysqli_fetch_all($retval,MYSQLI_ASSOC);
+            return $guest;
+
+mysqli_close($conn);
+    }
+
+
+function approvedguest()
+    {
+            $dbhost = 'localhost';
+            $dbuser = 'root';
+            $dbpass = '';
+            $dbname = 'rsvp';
+            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
+        
+            if(! $conn ) {
+               die('Could not connect: '.mysqli_error());
+            }
+               
+            $sql = "SELECT * FROM Request WHERE Status='APPROVED' ORDER BY Request_ID DESC ";
+               
+            mysqli_select_db($conn,$dbname);
+            $retval = mysqli_query($conn,$sql);
+
+            if(! $retval ) {
+               die('Could not get data: '.mysqli_error($conn));
+              echo "<script>alert('Failure.');</script>";
+            }
+
+            $guest=mysqli_fetch_all($retval,MYSQLI_ASSOC);
+            return $guest;
+
+mysqli_close($conn);
+    }
+
+function declinedguest()
+    {
+            $dbhost = 'localhost';
+            $dbuser = 'root';
+            $dbpass = '';
+            $dbname = 'rsvp';
+            $conn = mysqli_connect($dbhost,$dbuser,$dbpass);
+        
+            if(! $conn ) {
+               die('Could not connect: '.mysqli_error());
+            }
+               
+            $sql = "SELECT * FROM Request WHERE Status='REJECTED' ORDER BY Request_ID DESC ";
+               
+            mysqli_select_db($conn,$dbname);
+            $retval = mysqli_query($conn,$sql);
+
+            if(! $retval ) {
+               die('Could not get data: '.mysqli_error($conn));
+              echo "<script>alert('Failure.');</script>";
+            }
+
+            $guest=mysqli_fetch_all($retval,MYSQLI_ASSOC);
+            return $guest;
+
+mysqli_close($conn);
+    }
+
+
+
 
 
 
